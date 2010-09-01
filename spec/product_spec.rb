@@ -3,15 +3,14 @@ require File.dirname(__FILE__).sub(/\/spec(\/.*|$)/, '') + '/spec/spec_helper.rb
 require 'product'
 
 describe Product do
-  attrs = { :name => 'name', :code => 'code', :price => 3.11 }
+  it 'should create product given valid attributes' do
+    attrs = { :name => 'name', :code => 'code', :price => 3.11 }
+    product = nil
 
-  before do
-    @product = Product.new(attrs)
-  end
+    lambda { product = Product.new attrs }.should_not raise_error
 
-  attrs.each_pair do |attr, val|
-    it "should have product #{attr}" do
-      @product.send(attr.to_sym).should == val
-    end
+    product.name.should == 'name'
+    product.code.should == 'code'
+    product.price.should == 3.11
   end
 end
